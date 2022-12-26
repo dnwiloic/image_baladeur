@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ImageBaladeur:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ImageBaladeur_jar</output-path>
+    <root id="archive" name="ImageBaladeur.jar">
+      <element id="module-output" name="ImageBaladeur" />
+    </root>
+  </artifact>
+</component>

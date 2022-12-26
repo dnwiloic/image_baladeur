@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #008000; font-weight: bold;}
+.s3 { color: #0000ff;}
+.s4 { color: #808080; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span>javax.swing.*;
+<span class="s0">import </span>java.awt.*;
+
+<span class="s0">public class </span>Main {
+    <span class="s0">public static int </span>previouIndex;
+    <span class="s0">public static </span>JButton[] tabBtn;
+    <span class="s0">public static final </span>String imagePath =<span class="s2">&quot;C:</span><span class="s0">\\</span><span class="s2">wamp</span><span class="s0">\\</span><span class="s2">www</span><span class="s0">\\</span><span class="s2">logiciel</span><span class="s0">\\</span><span class="s2">presentation</span><span class="s0">\\</span><span class="s2">inside</span><span class="s0">\\</span><span class="s2">image</span><span class="s0">\\</span><span class="s2">twitter.png&quot;</span>;
+    <span class="s0">private static int </span>nbCase = <span class="s3">0</span>;
+    <span class="s0">private static int </span>posImage = <span class="s3">0</span>;
+    <span class="s0">public static </span>JLabel joueur= <span class="s0">new </span>JLabel(<span class="s2">&quot;inconnu...&quot;</span>);
+    <span class="s0">public static void </span>setPosImage(<span class="s0">int </span>posImage) {
+        <span class="s0">if </span>(posImage &lt; nbCase) Main.posImage = posImage;
+        <span class="s0">if</span>(tabBtn==<span class="s0">null</span>)<span class="s0">return</span>;
+        <span class="s0">for </span>(JButton btn:tabBtn) {
+            <span class="s0">if </span>(btn!=<span class="s0">null</span>)
+                btn.setIcon(<span class="s0">null</span>);
+            <span class="s0">else return</span>;
+        }
+        tabBtn[posImage].setIcon(<span class="s0">new </span>ImageIcon(imagePath));
+    }
+
+    <span class="s0">public static void </span>setNbCase(<span class="s0">int </span>nbCase) {
+        Main.nbCase = nbCase;
+    }
+
+    <span class="s0">public static void </span>main(String[] args) {
+        <span class="s4">//initialisation de la fenetre</span>
+        JFrame fenetre = <span class="s0">new </span>JFrame(<span class="s2">&quot;image baladeur&quot;</span>);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setBounds(<span class="s3">20</span>,<span class="s3">10</span>,<span class="s3">800</span>,<span class="s3">600</span>);
+        joueur.setFont(<span class="s0">new </span>Font(Font.SANS_SERIF,Font.PLAIN,<span class="s3">32</span>));
+        <span class="s4">// panel principal</span>
+        JPanel vBox = <span class="s0">new </span>JPanel();
+        vBox.setLayout(<span class="s0">new </span>BoxLayout(vBox,BoxLayout.PAGE_AXIS));
+        <span class="s4">//ajout du label a la fenetre</span>
+        vBox.add(joueur);
+
+        <span class="s4">//boite de dialogue pour recupere le nom</span>
+
+        String name = JOptionPane.showInputDialog(<span class="s0">null</span>,<span class="s2">&quot;Entrez votre nom&quot;</span>,<span class="s2">&quot;Nom du joueur&quot;</span>,
+                JOptionPane.QUESTION_MESSAGE);
+        String addrServ = JOptionPane.showInputDialog(<span class="s0">null</span>,<span class="s2">&quot;Entrez l'adresse du serveur&quot;</span>,<span class="s2">&quot;Nom du joueur&quot;</span>,
+                JOptionPane.QUESTION_MESSAGE);
+        Client comServeur = <span class="s0">new </span>Client(addrServ,name);
+        <span class="s0">while </span>(nbCase &lt; <span class="s3">1</span>);
+        <span class="s4">//initialisation de la grille</span>
+        JPanel grillePanel = <span class="s0">new </span>JPanel();
+        <span class="s0">int </span>nbLigne = (<span class="s0">int</span>)Math.sqrt(nbCase);
+        GridLayout maGrille=<span class="s0">new </span>GridLayout(nbLigne,nbCase/nbLigne);
+        grillePanel.setLayout(maGrille);
+        vBox.add(grillePanel);
+
+        <span class="s4">//initialisation des bouttons</span>
+        tabBtn = <span class="s0">new </span>JButton[ nbCase ];
+        <span class="s0">for </span>(<span class="s0">int </span>i=<span class="s3">0</span>; i&lt;tabBtn.length ; i++){
+            tabBtn[i]=<span class="s0">new </span>JButton();
+            tabBtn[i].addActionListener(<span class="s0">new </span>GereClickButton(i));
+            grillePanel.add(tabBtn[i]);
+        }
+        tabBtn[posImage].setIcon(<span class="s0">new </span>ImageIcon(imagePath));
+
+        fenetre.getContentPane().add(vBox);
+        fenetre.setVisible(<span class="s0">true</span>);
+    }
+}</pre>
+</body>
+</html>
